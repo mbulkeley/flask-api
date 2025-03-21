@@ -1,0 +1,39 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# dotenv environment files
+.env
+*.env
+
+# Logs
+*.log
+
+# Unit test cache
+.pytest_cache/
+.tox/
+.coverage
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# VS Code settings (optional)
+.vscode/
+
+# Docker files
+*.tar
+*.img
+*.pid
+
+# OS files
+.DS_Store
+Thumbs.db
