@@ -25,7 +25,7 @@ def get_connection(retries=5):
 
 @app.route('/')
 def dashboard():
-    return send_from_directory('app', 'dashboard.html')
+    return send_from_directory('.', 'dashboard.html')
 
 @app.route('/greet', methods=['POST'])
 def add_greeting():
