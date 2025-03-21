@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Greeting Dashboard</title>
+</head>
+<body>
+  <h1>Greetings</h1>
+  <ul id="greetings"></ul>
+  <script>
+    fetch('/greet')
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('greetings');
+        data.greetings.forEach(g => {
+          const li = document.createElement('li');
+          li.textContent = g.message;
+          list.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>
