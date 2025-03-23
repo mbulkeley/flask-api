@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SOAP Greeting Tester</title>
+</head>
+<body>
+  <h1>SOAP Greeting Tester</h1>
+  <form id="soapForm">
+    <label for="name">Enter Name:</label>
+    <input type="text" id="name" name="name" required />
+    <button type="submit">Say Hello</button>
+  </form>
+
+  <h2>Response:</h2>
+  <pre id="response"></pre>
+
+  <script>
+    document.getElementById('soapForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const soapBody = `
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                          xmlns:hel="spyne.greetings.soap">
+           <soapenv:Header/>
+           <soapenv:Body>
+              <hel:say_hello>
+                 <name>${name}</name>
+              </hel:say_hello>
+           </soapenv:Body>
+        </soapenv:Envelope>`;
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "/soap", true);
+      xhr.setRequestHeader("Content-Type", "text/xml; charset=utf-8");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          document.getElementById('response').textContent = xhr.responseText;
+        }
+      };
+      xhr.send(soapBody);
+    });
+  </script>
+</body>
+</html>

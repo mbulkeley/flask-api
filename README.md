@@ -1,8 +1,8 @@
-# Flask API + MariaDB
+# Flask API + MariaDB (Raspberry Pi Project)
 
 A simple full-stack API project built with Flask and MariaDB — containerized using Docker Compose and deployable to a Raspberry Pi. Includes a dashboard, secure environment handling, and auto-seeded database.
 
-Using as I brush up on some skills with my Raspberry Pi
+Using as I brush up on some skills with my Raspberry Pi.
 
 ---
 
@@ -15,24 +15,6 @@ Using as I brush up on some skills with my Raspberry Pi
 - Auto-creates & seeds a greetings table
 - HTML dashboard to view messages
 - Tested on Raspberry Pi
-
----
-
-## Project Structure
-
-```
-flask-api/
-├── app/
-│   ├── main.py
-│   └── dashboard.html
-├── init.sql
-├── .env             # secrets (not committed)
-├── .gitignore
-├── docker-compose.yml
-├── Dockerfile
-├── requirements.txt
-└── README.md
-```
 
 ---
 

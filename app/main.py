@@ -1,7 +1,15 @@
+
 from flask import Flask, jsonify, request, send_from_directory
 import pymysql
 import os
 import time
+
+from spyne import Application, rpc, ServiceBase, Unicode
+from spyne.protocol.soap import Soap11
+from spyne.server.wsgi import WsgiApplication
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+
+# === Flask REST ===
 
 app = Flask(__name__)
 
@@ -25,7 +33,11 @@ def get_connection(retries=5):
 
 @app.route('/')
 def dashboard():
-    return send_from_directory('.', 'dashboard.html')
+    return send_from_directory(os.path.dirname(__file__), 'dashboard.html')
+
+@app.route('/soap-ui')
+def soap_dashboard():
+    return send_from_directory(os.path.dirname(__file__), 'soap_dashboard.html')
 
 @app.route('/greet', methods=['POST'])
 def add_greeting():
@@ -52,5 +64,36 @@ def list_greetings():
 def health():
     return jsonify(status="OK")
 
+
+# === SOAP Service ===
+class GreetingService(ServiceBase):
+    @rpc(Unicode, _returns=Unicode)
+    def say_hello(ctx, name):
+        try:
+            conn = get_connection()
+            with conn.cursor() as cur:
+                cur.execute("SELECT message FROM greetings ORDER BY id DESC LIMIT 1")
+                result = cur.fetchone()
+            conn.close()
+            if result:
+                return f"{result[0]} (to {name})"
+            else:
+                return f"Hello, {name}!"
+        except Exception as e:
+            return f"DB error: {str(e)}"
+
+soap_app = Application(
+    [GreetingService],
+    tns='spyne.greetings.soap',
+    in_protocol=Soap11(validator='lxml'),
+    out_protocol=Soap11()
+)
+
+# Combine REST + SOAP
+application = DispatcherMiddleware(app, {
+    "/soap": WsgiApplication(soap_app)
+})
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    from werkzeug.serving import run_simple
+    run_simple('0.0.0.0', 5000, application)

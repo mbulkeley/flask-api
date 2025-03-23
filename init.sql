@@ -1,9 +1,11 @@
 CREATE TABLE IF NOT EXISTS greetings (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    message VARCHAR(255)
+    name VARCHAR(255) DEFAULT NULL,
+    message VARCHAR(255) NOT NULL
 );
 
-INSERT INTO greetings (message) VALUES 
-('Welcome to the Flask API!'),
-('Hello from the Pi!'),
-('This is DevSecOps in action.');
+-- Insert greetings with optional names
+INSERT INTO greetings (name, message) VALUES 
+(NULL, 'Welcome to the Flask API!'),
+('Alice', 'Hello Alice from the Pi!'),
+('Bob', 'This is DevSecOps in action, Bob.');
