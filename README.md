@@ -33,14 +33,14 @@ Using as I brush up on some skills with my Raspberry Pi.
 Clone using SSH:
 
 ```bash
-git clone git@github.com:captchaos/flask-api.git
+git clone git@github.com:mbulkeley/flask-api.git
 cd flask-api
 ```
 
 Or with HTTPS:
 
 ```bash
-git clone https://github.com/captchaos/flask-api.git
+git clone https://github.com/mbulkeley/flask-api.git
 cd flask-api
 ```
 
